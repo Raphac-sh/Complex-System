@@ -1,5 +1,5 @@
-from mesa.examples.advanced.wolf_sheep.agents import GrassPatch, Sheep, Wolf
-from mesa.examples.advanced.wolf_sheep.model import WolfSheep
+from agents import GrassPatch, Sheep, Wolf
+from model import WolfSheep
 from mesa.experimental.devs import ABMSimulator
 from mesa.batchrunner import batch_run
 
@@ -85,39 +85,13 @@ lineplot_component = make_plot_component(
 )
 
 simulator = ABMSimulator()
+model = WolfSheep(simulator=simulator, grass=True)
 
-"""
 page = SolaraViz(
     model,
-    components=[space_component, lineplot_component, death_component],
+    components=[space_component, lineplot_component],
     model_params=model_params,
     name="Wolf Sheep",
     simulator=simulator,
 )
 page  # noqa
-"""
-params = {
-    "width": 20,
-    "height":20,
-    "initial_sheep":100,
-    "initial_wolves":50,
-    "sheep_reproduce":0.04,
-    "wolf_reproduce":0.05,
-    "wolf_gain_from_food":20,
-    "grass":True,
-    "grass_regrowth_time":30,
-    "sheep_gain_from_food":4,
-    "seed":None,
-    "simulator": ABMSimulator(),
-}
-
-if __name__ == '__main__':
-    results = batch_run(
-        WolfSheep,
-        parameters=params,
-        iterations=5,
-        max_steps=100,
-        number_processes=None,
-        data_collection_period=1,
-        display_progress=True,
-    )

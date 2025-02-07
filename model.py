@@ -1,19 +1,8 @@
-"""
-Wolf-Sheep Predation Model
-================================
-
-Replication of the model found in NetLogo:
-    Wilensky, U. (1997). NetLogo Wolf Sheep Predation model.
-    http://ccl.northwestern.edu/netlogo/models/WolfSheepPredation.
-    Center for Connected Learning and Computer-Based Modeling,
-    Northwestern University, Evanston, IL.
-"""
-
 import math
 
 from mesa import Model
 from mesa.datacollection import DataCollector
-from mesa.examples.advanced.wolf_sheep.agents import GrassPatch, Sheep, Wolf
+from agents import GrassPatch, Sheep, Wolf
 from mesa.experimental.cell_space import OrthogonalVonNeumannGrid
 from mesa.experimental.devs import ABMSimulator
 
@@ -62,6 +51,7 @@ class WolfSheep(Model):
         """
         super().__init__(seed=seed)
         self.simulator = simulator
+        self.simulator.reset()
         self.simulator.setup(self)
 
         # Initialize model parameters
@@ -133,7 +123,7 @@ class WolfSheep(Model):
 
         self.time += 1
 
-        if len(self.agents_by_type[Sheep]) == 0 && self.death == 0:
+        if len(self.agents_by_type[Sheep]) == 0 and self.death == 0:
             self.death = self.time 
         
         self.agents_by_type[Sheep].shuffle_do("step")
