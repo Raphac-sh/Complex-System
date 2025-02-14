@@ -50,8 +50,7 @@ class WolfSheep(Model):
             simulator: ABMSimulator instance for event scheduling
         """
         super().__init__(seed=seed)
-        self.simulator = simulator
-        self.simulator.reset()
+        self.simulator = ABMSimulator() 
         self.simulator.setup(self)
 
         # Initialize model parameters
@@ -60,7 +59,7 @@ class WolfSheep(Model):
         self.grass = grass
 
         self.time = 0
-        self.death = 0
+        self.death = 200
     
 
         # Create grid using experimental cell space
@@ -114,6 +113,7 @@ class WolfSheep(Model):
                 GrassPatch(self, countdown, grass_regrowth_time, cell)
 
         # Collect initial data
+        self.simulator.run_for(200)
         self.running = True
         self.datacollector.collect(self)
 
@@ -123,8 +123,9 @@ class WolfSheep(Model):
 
         self.time += 1
 
-        if len(self.agents_by_type[Sheep]) == 0 and self.death == 0:
+        if len(self.agents_by_type[Sheep]) == 0 and self.death == 200:
             self.death = self.time 
+
         
         self.agents_by_type[Sheep].shuffle_do("step")
         self.agents_by_type[Wolf].shuffle_do("step")

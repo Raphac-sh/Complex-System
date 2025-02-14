@@ -25,8 +25,9 @@ class Animal(CellAgent):
     def spawn_offspring(self):
         """Create offspring by splitting energy and creating new instance."""
         self.energy /= 2
-        self.__class__(
+        self.__class__.create_agents(
             self.model,
+            1,
             self.energy,
             self.p_reproduce,
             self.energy_from_food,

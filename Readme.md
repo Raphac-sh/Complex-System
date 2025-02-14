@@ -18,4 +18,5 @@ different files :
 - `batch.py` : Runs various simulations and generates 3D graphs of the results with matplotlib. 
 
 To launch the code with vizualisation : `solara run app.py`
-To launch bathces : `python3 batch.py`
+
+To launch batches : `python3 batch.py`
