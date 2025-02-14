@@ -123,7 +123,7 @@ class WolfSheep(Model):
 
         self.time += 1
 
-        if len(self.agents_by_type[Sheep]) == 0 and self.death == 200:
+        if len(self.agents_by_type[Wolf]) == 0 and self.death == 200:
             self.death = self.time 
 
         

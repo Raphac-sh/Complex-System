@@ -6,24 +6,24 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-x = np.arange(0.1, 0.6, 0.01)
-y = [k for k in range(10,30)] 
+x = [k for k in range(1,10)]
+y = [k for k in range(1,50)] 
 
 simulator = ABMSimulator()
 
 params = {
     "grass":True,
-    "initial_sheep": 50,  # Différents nombres de moutons initiaux
-    "initial_wolves": 1,   # Différents nombres de loups initiaux
-    "grass_regrowth_time": y,
-    "sheep_reproduce": x, 
-    "wolf_reproduce": 0., 
-    "wolf_gain_from_food": 1,
-    "sheep_gain_from_food": 5,
+    "initial_sheep": 100,  # Différents nombres de moutons initiaux
+    "initial_wolves": 5,   # Différents nombres de loups initiaux
+    "grass_regrowth_time": 25,
+    "sheep_reproduce": 0.04, 
+    "wolf_reproduce": 0.05, 
+    "wolf_gain_from_food": y,
+    "sheep_gain_from_food": x,
     "simulator": simulator,
 }
 
-a = 1
+a = 10 
 # Configuration du BatchRunner
 results = batch_run (
     WolfSheep,
@@ -34,16 +34,15 @@ results = batch_run (
 
 Z = np.zeros((len(x),len(y)))
 for res in results:
-    print(res["sheep_reproduce"], res["grass_regrowth_time"], res["DeathTime"])
-    Z[int((res["sheep_reproduce"]*100 - 10)/5),int(res["grass_regrowth_time"])-1] += res["DeathTime"]/a
+    Z[int(res["sheep_gain_from_food"]-1),int(res["wolf_gain_from_food"]-1)] += res["DeathTime"]/a
 
 print(Z)
 
 fig = plt.figure(figsize = (8,6))
 
 ax = plt.axes(projection='3d')
-ax.set_xlabel('Grass growth time', labelpad=50)
-ax.set_ylabel('Sheep reproduction rate', labelpad=10)
+ax.set_xlabel('Sheep gain from food', labelpad=50)
+ax.set_ylabel('Wolf gain from food', labelpad=10)
 ax.set_zlabel('Death time', labelpad=20)
 
 
